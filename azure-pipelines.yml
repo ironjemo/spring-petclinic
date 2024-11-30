@@ -21,6 +21,6 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'Azure subscription 1'  # Sustituir con el nombre de tu suscripción de Azure
+    azureSubscription: 'Azure-Service-Connection-DevOps'  # Sustituir con el nombre de tu suscripción de Azure
     appName: 'Spring'  # Sustituir con el nombre de tu aplicación web en Azure
     package: '$(Build.ArtifactStagingDirectory)/*.jar'  # Ubicación del archivo JAR generado
