@@ -1,0 +1,26 @@
+trigger:
+- main  # Rama en la que se ejecutará el pipeline, cámbiala si es necesario
+
+pool:
+  vmImage: 'ubuntu-latest'  # Usamos una imagen de Ubuntu para la compilación
+
+steps:
+- task: MavenAuthenticate@0
+  inputs:
+    mavenPomFile: 'pom.xml'
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean install'  # Limpiar y compilar el proyecto
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'drop'
+    publishLocation: 'Container'  # Publicar artefactos
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1'  # Sustituir con el nombre de tu suscripción de Azure
+    appName: 'Spring'  # Sustituir con el nombre de tu aplicación web en Azure
+    package: '$(Build.ArtifactStagingDirectory)/*.jar'  # Ubicación del archivo JAR generado
